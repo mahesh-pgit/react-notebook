@@ -16,5 +16,5 @@ Other key features include the ability to pause, abort, or reuse work as new upd
 
 The Fiber reconciliation process is divided into two main phases:
 
--   **Render/Reconciliation Phase**: This phase is asynchronous and interruptible. React builds a "work-in-progress" fiber tree in the background, creating a list of all changes (an "effect list") that need to be made. No actual DOM changes happen yet.
--   **Commit Phase**: This phase is synchronous and uninterruptible. React applies all the changes from the effect list to the actual DOM, making them visible to the user.
+- **Render/Reconciliation Phase**: This phase is asynchronous and interruptible. React builds a "work-in-progress" fiber tree in the background, creating a list of all changes (an "effect list") that need to be made. No actual DOM changes happen yet.
+- **Commit Phase**: This phase is synchronous and uninterruptible. React applies all the changes from the effect list to the actual DOM, making them visible to the user.
