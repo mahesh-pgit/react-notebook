@@ -1,4 +1,6 @@
-### In React, a reconciler is an algorithm that helps it compare two DOM trees and get the difference between the two. This helps React determine what it needs to change on the screen.
+# Reconciliation & React Fiber
+
+_In React, a reconciler is an algorithm that helps it compare two DOM trees and get the difference between the two. This helps React determine what it needs to change on the screen._
 
 The goal of React Fiber is to increase its suitability for areas like animation, layout, and gestures. Its headline feature is incremental rendering: the ability to split rendering work into chunks and spread it out over multiple frames.
 
@@ -12,7 +14,7 @@ Other key features include the ability to pause, abort, or reuse work as new upd
 
 **Priority Scheduling**: Updates are assigned different priorities. User interactions (like typing in a text field) have a higher priority than less urgent tasks (like rendering a large, off-screen list), ensuring a fluid user experience.
 
-## How It Works (Phases)
+### How it works (Phases)
 
 The Fiber reconciliation process is divided into two main phases:
 

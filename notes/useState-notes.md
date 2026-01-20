@@ -1,5 +1,7 @@
 # useState() notes
 
+## Understanding asynchronous state updates
+
 ```javascript
 const App = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -17,15 +19,17 @@ const App = () => {
 };
 ```
 
-Initially the `isOpen` is `false` and on clicking the button, `console.log` must be `true` cause its updating the `isOpen` in the before statement. Right? NOPE.
+Initially, `isOpen` is `false`, and on clicking the button, `console.log(isOpen)` should be `true` because you're updating `isOpen` in the previous statement. Right? NOPE.
 
 > `setState` in React is asynchronous.
 
 `console.log(isOpen)` will still log the previous value, not the updated one. Why?
 
-#### React batches state updates for performance. So when you call `setIsOpen(!isOpen)`, the state change is scheduled, but not immediately applied in the same tick.
+_React batches state updates for performance. So when you call `setIsOpen(!isOpen)`, the state change is scheduled, but not immediately applied in the same tick._
 
 ---
+
+## State mutation without reference change
 
 ```javascript
 const App = () => {
@@ -53,8 +57,9 @@ const App = () => {
 };
 ```
 
-```
+```markdown
 <!-- console -->
+
 App.js:11 Render
 App.js:8 Effect ran
 App.js:17 Setter function called
@@ -65,7 +70,7 @@ Here, we might think that the state `obj` gets updated, so React should trigger 
 
 > React compares objects by reference, not by value.
 
-#### Since we’re returning the same object from the setter function, React sees that the reference has not changed. So it assumes the state has not changed, even though it has.
+_Since we’re returning the same object from the setter function, React sees that the reference has not changed. So it assumes the state has not changed, even though it has._
 
 The same applies to `useEffect`. Dependencies are also compared by reference, not by value.
 

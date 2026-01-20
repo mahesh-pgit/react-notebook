@@ -1,27 +1,23 @@
 # useRef() notes
 
--   `useRef` values are mutable containers that persist across renders but do not trigger re-renders when changed.
+## Understanding useRef
 
-> `useRef` → changes DO NOT cause re-render
->
-> `useState` → changes cause re-render — use this when UI must reflect the change.
+- `useRef` values are mutable containers that persist across renders but do not trigger re-renders when changed.
 
--   `ref.current` is like editing a normal JS object property that React does not track for re-render triggers.
+- `ref.current` is like editing a normal JS object property that React does not track for re-render triggers.
 
--   Refs are intentionally designed as “escape hatches” — minimum overhead, no reconciliation, no scheduling, no renders.
+- Refs are intentionally designed as “escape hatches” — minimum overhead, no reconciliation, no scheduling, no renders.
 
--   Perfect for:
+- Perfect for:
+    - Storing values between renders
+    - Tracking state that doesn't belong in UI
+    - Storing DOM nodes
+    - Flags (like skipping the first effect)
 
-    -   Storing values between renders
-    -   Tracking state that doesn't belong in UI
-    -   Flags (like skipping the first effect)
-    -   Storing DOM nodes
-
--   Quick rules-of-thumb
-
-    -   Local variables (declared inside component) are reinitialized every render — they don’t persist.
-    -   `useRef` persists across renders and mutations to `.current` do not trigger re-renders.
-    -   `useState` persists and does trigger re-renders when updated.
+- Quick rules-of-thumb
+    - Local variables (declared inside component) are reinitialized on every render — they don’t persist.
+    - `useRef` persists across renders and mutations to `.current` do not trigger re-renders.
+    - `useState` persists and does trigger re-renders when updated — use this when UI must reflect the change.
 
 ```javascript
 const App = () => {
@@ -44,18 +40,20 @@ const App = () => {
 };
 ```
 
-### Why a ref does NOT recreate a new variable on every render
+---
+
+## Why a ref does not recreate a new variable on every render?
 
 Because React does something special with hooks:
 
--   Every render creates a new lexical environment
--   BUT `useRef()` returns the same object instance across renders.
+- Every render creates a new lexical environment.
+- BUT `useRef()` returns the same object instance across renders.
 
 That "sameness" is the entire purpose of refs.
 
 > React manages refs outside the component's JS scope.
 
-```
+```markdown
 Render 1 → refVariable = { current: 0 }
 Render 2 → refVariable = SAME OBJECT
 Render 3 → refVariable = SAME OBJECT
@@ -63,7 +61,7 @@ Render 3 → refVariable = SAME OBJECT
 Render N → refVariable = SAME OBJECT
 ```
 
-The object instance does not change. Only `.current` changes.
+_The object instance does not change. Only `.current` changes._
 
 ```javascript
 const SomeComponent = ({ num }) => {
