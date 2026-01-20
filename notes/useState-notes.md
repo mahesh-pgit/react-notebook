@@ -8,8 +8,8 @@ const App = () => {
 		<button
 			onClick={() => {
 				setIsOpen(!isOpen); // won't get updated here
-				console.log(isOpen); //false
-				if (isOpen) //...; //this line gets skipped iykyk
+				console.log(isOpen); // false
+				if (isOpen) /*...*/ ; // this line gets skipped iykyk
 			}}>
 			Click to open
 		</button>
