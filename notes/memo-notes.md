@@ -1,4 +1,4 @@
-# React.memo() notes
+# memo() notes
 
 Pure Component always renders the same output given the same inputs (props, state, and context) and has no side effects during rendering.
 
