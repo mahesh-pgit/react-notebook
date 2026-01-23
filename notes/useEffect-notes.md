@@ -59,6 +59,7 @@ YES. A component can totally have as many `useEffect` hooks as you want.
 
 Instead of shoving everything into one monster `useEffect`, you can split them up for clarity and control.
 
+> [!NOTE]
 > React runs all `useEffect`s in order (top → bottom).
 
 ```javascript
@@ -99,6 +100,7 @@ const MultiEffectComponent = ({ userId }) => {
 
 ## Understanding cleanup and unmounting with single component
 
+> [!NOTE]
 > React guarantees that every effect cleans up its previous side effects before creating new ones.
 
 ```javascript
@@ -150,6 +152,7 @@ During render `num = 5`, cleanup 4 is executed, till here everything looks predi
 
 This is the key misunderstanding:
 
+> [!IMPORTANT]
 > Returning `null`/`false` from a component does not remove the component instance — it just renders nothing. It is not the same as unmounting the component instance.
 
 _You will see `EFFECT mounted 5` because the component is still mounted and the effect runs for that render, even the button disappears. There is no final cleanup for `num = 5` unless the component instance is unmounted by its parent. So the effect lifecycle for that render still runs._
@@ -237,11 +240,12 @@ SomeComponent.js:7 EFFECT cleanup 0
 
 You thought the cleanup logs `EFFECT cleanup 4` during unmount, right? HAHA, GOTCHU!
 
+> [!IMPORTANT]
 > The cleanup holds the value that existed when the effect executed.
 
 _React’s render creates a new lexical scope on every render (i.e. fresh `num` variable) , and the effect and its cleanup closes over the variable binding (`num`) that existed in the render when the effect executed. Later renders create new `num` bindings — but those are different variables (different lexical environments), not mutations of the original binding, so the cleanup sees the old value._
 
-> New render → new function call → new lexical scope → new variable binding.
+> **New render → new function call → new lexical scope → new variable binding.**
 
 Visualize it like:
 
@@ -423,11 +427,11 @@ App
     └── ParentTwo
 ```
 
-> React renders the tree top → bottom in hierarchy (depth-first traversal).
-
-> React batches rendering, and once the render phase is complete, it runs all `useEffect`s.
-
-> Effects run bottom → top in hierarchy (after paint).
+> [!NOTE]
+>
+> - React renders the tree top → bottom in hierarchy (depth-first traversal).
+> - React batches rendering, and once the render phase is complete, it runs all `useEffect`s.
+> - Effects run bottom → top in hierarchy (after paint).
 
 1️⃣ Initial mount (`num = 0`)
 
@@ -456,6 +460,7 @@ GrandParent EFFECT 0
 
 We already know from the previous section that cleanup always runs before the next effect. But what we didn’t know earlier is this:
 
+> [!NOTE]
 > Cleanups also run bottom → top in the hierarchy before effects run.
 
 Why?
@@ -531,8 +536,7 @@ _Cleanup order during dependency changes ≠ cleanup order during unmount._
 
 React did not violate its own rules. It followed a different rule set.
 
-#### Key distinction
-
+> [!TIP]
 > Unmount cleanup is not effect cleanup. It is component destruction.
 
 ```ini

@@ -51,6 +51,7 @@ Because React does something special with hooks:
 
 That "sameness" is the entire purpose of refs.
 
+> [!TIP]
 > React manages refs outside the component's JS scope.
 
 ```markdown

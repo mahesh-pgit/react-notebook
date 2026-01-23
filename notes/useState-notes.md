@@ -21,6 +21,7 @@ const App = () => {
 
 Initially, `isOpen` is `false`, and on clicking the button, `console.log(isOpen)` should be `true` because you're updating `isOpen` in the previous statement. Right? NOPE.
 
+> [!NOTE]
 > `setState` in React is asynchronous.
 
 `console.log(isOpen)` will still log the previous value, not the updated one. Why?
@@ -68,6 +69,7 @@ App.js:19 obj.num = 2
 
 Here, we might think that the state `obj` gets updated, so React should trigger a re-render. But here’s the thing: React does not re-render, even though the state mutates behind the scenes.
 
+> [!IMPORTANT]
 > React compares objects by reference, not by value.
 
 _Since we’re returning the same object from the setter function, React sees that the reference has not changed. So it assumes the state has not changed, even though it has._
